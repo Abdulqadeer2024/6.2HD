@@ -1,33 +1,54 @@
 pipeline {
     agent any
-    tools {
-        nodejs 'NodeJS-16.20.1'  // Use the exact name configured in Jenkins
-    }
+
     stages {
-        stage('Checkout SCM') {
+        stage('Checkout') {
             steps {
+                // Simulates checking out source code
+                echo 'Checking out code...'
                 checkout scm
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                bat 'npm install'
-            }
-        }
-        stage('Test') {
-            steps {
-                bat 'npm test'
-            }
-        }
+        
         stage('Build') {
             steps {
-                bat 'npm run build'
+                // Simulates a build process
+                echo 'Building the application...'
+                // Example: sh 'mvn clean install' for a Maven-based project
             }
         }
+        
+        stage('Test') {
+            steps {
+                // Placeholder for test commands
+                echo 'Running tests...'
+                // Example: sh 'mvn test' for a Maven-based project
+            }
+        }
+        
         stage('Deploy') {
             steps {
-                bat 'npm run deploy'
+                // Placeholder for deployment
+                echo 'Deploying application...'
+                // Example: sh 'deploy.sh' for running a deploy script
             }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up after the pipeline run
+            echo 'Cleaning up post build...'
+        }
+        success {
+            echo 'Build and deployment successful!'
+            // Notifications or additional steps on success
+            // Example: mail to: 'team@example.com', subject: 'Build Successful', body: 'The build and deployment were successful.'
+        }
+        failure {
+            echo 'Build or deployment failed!'
+            // Notifications or additional steps on failure
+            // Example: mail to: 'team@example.com', subject: 'Build Failed', body: 'The build or deployment failed. Please check the logs.'
         }
     }
 }
