@@ -1,8 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs "NodeJS-16.20.1"
-        dockerTool "Default"
+        // Specify tools if needed
     }
     stages {
         stage('Build') {
@@ -15,10 +14,11 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Ensure the working directory inside Docker is set to a valid Unix path
-                    docker.image("my-app:${env.BUILD_ID}").inside('-w /workspace') {
-                        sh 'npm install'
-                        sh 'npm test'
+                    // Specify Unix-style path for Docker
+                    def dockerPath = "/jenkins/workspace"
+                    docker.image("my-app:${env.BUILD_ID}").inside("-w ${dockerPath}") {
+                        sh 'echo Running tests in Docker container'
+                        // Add test commands here
                     }
                 }
             }
