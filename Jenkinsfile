@@ -1,41 +1,21 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven 3.6' // Make sure this name matches your configured Maven in Jenkins global tools
+    }
     stages {
-        stage('Checkout') {
-            steps {
-                // Simulates checking out source code
-                echo 'Checking out code...'
-            }
-        }
-        
         stage('Build') {
             steps {
-                // Simulates a build process
-                echo 'Building the application...'
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                // Placeholder for test commands
-                echo 'Running tests...'
-                // If you have test scripts, they would be run here, e.g., `sh 'mvn test'` for a Maven-based Java project
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                // Placeholder for deployment
-                echo 'Deploying application...'
+                script {
+                    // This command handles Maven build and also runs JUnit tests automatically
+                    sh 'mvn clean install'
+                }
             }
         }
     }
-    
     post {
         always {
-            // Clean up after the pipeline run
-            echo 'Cleaning up post build...'
+            junit '**/target/surefire-reports/*.xml' // This step collects JUnit test reports
         }
     }
 }
