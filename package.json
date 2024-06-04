@@ -1,0 +1,14 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "My application",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.0.0"
+  }
+}
