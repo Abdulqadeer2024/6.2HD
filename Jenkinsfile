@@ -1,32 +1,14 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.7'
-            args '-v $HOME/.m2:/root/.m2 -w /home/jenkins/workspace'
-            reuseNode true
-        }
+    agent any
+    tools {
+        nodejs "NodeJS-12.x"
+        dockerTool "docker"
     }
-    
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-        
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
+                script {
+                    docker.build("my-app:${env.BUILD_ID}")
                 }
             }
         }
