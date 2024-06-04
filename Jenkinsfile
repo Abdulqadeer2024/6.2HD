@@ -1,27 +1,41 @@
 pipeline {
     agent any
-    tools {
-        // Specify tools if needed
-    }
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                script {
-                    docker.build("my-app:${env.BUILD_ID}")
-                }
+                // Simulates checking out source code
+                echo 'Checking out code...'
             }
         }
+        
+        stage('Build') {
+            steps {
+                // Simulates a build process
+                echo 'Building the application...'
+            }
+        }
+        
         stage('Test') {
             steps {
-                script {
-                    // Specify Unix-style path for Docker
-                    def dockerPath = "/jenkins/workspace"
-                    docker.image("my-app:${env.BUILD_ID}").inside("-w ${dockerPath}") {
-                        sh 'echo Running tests in Docker container'
-                        // Add test commands here
-                    }
-                }
+                // Placeholder for test commands
+                echo 'Running tests...'
+                // If you have test scripts, they would be run here, e.g., `sh 'mvn test'` for a Maven-based Java project
             }
+        }
+        
+        stage('Deploy') {
+            steps {
+                // Placeholder for deployment
+                echo 'Deploying application...'
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up after the pipeline run
+            echo 'Cleaning up post build...'
         }
     }
 }
