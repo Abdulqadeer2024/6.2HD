@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'NodeJS-16.20'  // Ensure you have configured Node.js in Jenkins and named it 'NodeJS-16.20'
+        nodejs 'NodeJS-16.20.1'  // Use the exact name configured in Jenkins
     }
     stages {
         stage('Checkout SCM') {
