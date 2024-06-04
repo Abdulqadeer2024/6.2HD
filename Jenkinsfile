@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.6' // Ensure this matches your configured Maven in Jenkins
+        maven 'Default' // Ensure this matches your configured Maven in Jenkins
     }
     stages {
         stage('Build') {
