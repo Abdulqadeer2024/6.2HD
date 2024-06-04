@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-        nodejs "NodeJS-12.x"
-        dockerTool "docker"
+        nodejs "NodeJS-16.20.1"
+        dockerTool "Default"
     }
     stages {
         stage('Build') {
