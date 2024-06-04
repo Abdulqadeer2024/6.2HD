@@ -1,14 +1,19 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
-    }
+    
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
+        
         stage('Test') {
             steps {
                 sh 'mvn test'
@@ -19,9 +24,10 @@ pipeline {
                 }
             }
         }
+        
         stage('Deliver') {
             steps {
-                sh './deliver.sh'
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
