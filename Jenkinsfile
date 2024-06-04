@@ -1,22 +1,33 @@
 pipeline {
     agent any
     tools {
-        maven 'Default' // Ensure this matches your configured Maven in Jenkins
+        nodejs 'NodeJS-16.20'  // Ensure you have configured Node.js in Jenkins and named it 'NodeJS-16.20'
     }
     stages {
-        stage('Build') {
+        stage('Checkout SCM') {
             steps {
-                script {
-                    // Build the project and run tests
-                    bat 'mvn clean install'
-                }
+                checkout scm
             }
         }
-    }
-    post {
-        always {
-            // Collect JUnit test reports
-            junit '**/target/surefire-reports/*.xml'
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'npm run deploy'
+            }
         }
     }
 }
