@@ -15,7 +15,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    docker.image("my-app:${env.BUILD_ID}").inside('-w /workspace -v C:/Users/thisi/.jenkins/workspace/Jenkinsfile:/workspace') {
+                    docker.image("my-app:${env.BUILD_ID}").inside('-v ${env.WORKSPACE}:/workspace -w /workspace') {
                         sh 'npm install'
                         sh 'npm test'
                     }
