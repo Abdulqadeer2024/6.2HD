@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3.9.7-openjdk-11'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
     
     stages {
         stage('Checkout') {
@@ -10,13 +15,13 @@ pipeline {
         
         stage('Build') {
             steps {
-                bat 'mvn -B -DskipTests clean package'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         
         stage('Test') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
             }
             post {
                 always {
