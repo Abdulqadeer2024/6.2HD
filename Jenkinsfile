@@ -15,7 +15,8 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    docker.image("my-app:${env.BUILD_ID}").inside('-v ${env.WORKSPACE}:/workspace -w /workspace') {
+                    // Ensure the working directory inside Docker is set to a valid Unix path
+                    docker.image("my-app:${env.BUILD_ID}").inside('-w /workspace') {
                         sh 'npm install'
                         sh 'npm test'
                     }
